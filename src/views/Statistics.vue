@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavBar />
     <span>statistics</span>
   </div>
 </template>

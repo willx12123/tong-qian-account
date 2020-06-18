@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavBar />
     <span>Labels</span>
   </div>
 </template>
