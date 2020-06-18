@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <NavBar />
-    <span>Money</span>
+  <div class="container">
+    <Layout>
+      <div>money</div>
+    </Layout>
   </div>
 </template>
 

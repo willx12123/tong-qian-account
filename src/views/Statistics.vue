@@ -1,8 +1,7 @@
 <template>
-  <div>
-    <NavBar />
-    <span>statistics</span>
-  </div>
+  <Layout>
+    <div>Statistics</div>
+  </Layout>
 </template>
 
 <script lang="ts">
