@@ -41,6 +41,11 @@
         this.currentMoney = '0';
         return;
       }
+      if (button.id === 'ok') {
+        this.$emit('updateNumber', this.currentMoney);
+        this.currentMoney = '0';
+        return;
+      }
 
       const input = button.textContent;
       if (this.currentMoney.length === 15) {

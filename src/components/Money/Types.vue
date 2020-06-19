@@ -15,13 +15,13 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component } from 'vue-property-decorator';
+  import { Component, Prop } from 'vue-property-decorator';
 
   @Component
   export default class Types extends Vue {
-    type = 0; // 0表示支出，1表示收入
+    @Prop(Number) readonly type: number | undefined; // 0表示支出，1表示收入
     selectType(type: number) {
-      this.type = type;
+      this.$emit('update:type', type);
     }
   }
 </script>

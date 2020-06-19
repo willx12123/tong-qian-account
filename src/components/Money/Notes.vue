@@ -2,7 +2,9 @@
   <div class="notes">
     <label>
       <span class="notes-name">备注</span>
-      <input type="text" placeholder="在这里输入备注" v-model:value="notes" />
+      <input type="text" placeholder="在这里输入备注" v-model:value="notes"
+             @input="handleNotesChange"
+      />
     </label>
   </div>
 </template>
@@ -14,6 +16,10 @@
   @Component
   export default class Notes extends Vue {
     notes: string = '';
+
+    handleNotesChange() {
+      this.$emit('updateValue', this.notes);
+    }
   };
 </script>
 

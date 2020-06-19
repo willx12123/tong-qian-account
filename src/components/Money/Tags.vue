@@ -1,30 +1,52 @@
 <template>
   <div class="tags">
-    <div class="current-tags">
-      <div class="tag-item" v-for="item in currentTags">
+    <div @click="select" class="current-tags">
+      <div class="tag-item" v-for="item in tagsData"
+           :key="item"
+      >
         {{ item }}
       </div>
     </div>
     <div class="new-tag">
-      <button>新增标签</button>
+      <button @click="createNewTag">新增标签</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Tags',
-    data() {
-      return {
-        currentTags: [
-          '买衣服',
-          '吃饭',
-          '房租',
-          '零食',
-          '打游戏',
-          '买会员'
-        ]
-      };
+  import Vue from 'vue';
+  import { Component, Prop } from 'vue-property-decorator';
+
+  @Component
+  export default class Tags extends Vue {
+    @Prop(Array) readonly tagsData: string[] | undefined;
+    selectedTags: string[] = [];
+
+    select(e: MouseEvent) {
+      const button = e.target as HTMLBaseElement;
+      if (button.classList.contains('tag-item')) {
+        const text = button.textContent!;
+        if (button.classList.contains('selected')) {
+          const index = this.selectedTags.indexOf(text);
+          this.selectedTags.splice(index, 1);
+          button.classList.remove('selected');
+        } else {
+          this.selectedTags.push(text);
+          button.classList.add('selected');
+        }
+        this.$emit('updateSelected', this.selectedTags);
+      }
+    }
+
+    createNewTag() {
+      const name: string = window.prompt('请输入新标签名') || '';
+      if (name === '' || name.length > 6) {
+        window.alert('标签名为空或过长！');
+      } else {
+        if (this.tagsData) {
+          this.$emit('update:tagsData', [...this.tagsData, name]);
+        }
+      }
     }
   };
 </script>
@@ -48,15 +70,22 @@
       flex-wrap: wrap;
       overflow: auto;
 
+      $bg-color: #DDDDDD;
+
       .tag-item {
         margin-bottom: 8px;
         margin-right: 12px;
         padding: 3px 12px;
         border-radius: 24px;
-        background-color: #DDDDDD;
+        background-color: $bg-color;
 
         font-size: 13px;
         color: #333333;
+      }
+
+      .tag-item.selected {
+        background-color: darken($bg-color, 40%);
+        color: #EFEFEF;
       }
     }
 
