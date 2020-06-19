@@ -16,7 +16,6 @@
     height = 0;
 
     mounted() {
-      console.log(document.body.clientHeight);
       this.height = document.body.clientHeight;
     }
   };
