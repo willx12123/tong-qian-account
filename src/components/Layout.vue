@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="content">
+  <div :style="`height: ${height}px`" class="container">
+    <div :style="`height: ${height - 49}px`" class="content">
       <slot></slot>
     </div>
     <NavBar />
@@ -8,21 +8,25 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'LayOut'
+  import Vue from 'vue';
+  import { Component } from 'vue-property-decorator';
+
+  @Component
+  export default class Layout extends Vue {
+    height = 0;
+
+    mounted() {
+      console.log(document.body.clientHeight);
+      this.height = document.body.clientHeight;
+    }
   };
 </script>
 
 <style lang="scss" scoped>
   .container {
     width: 100%;
-    height: 100vh;
-
-    display: flex;
-    flex-direction: column;
 
     .content {
-      flex-grow: 1;
       overflow: auto;
     }
   }

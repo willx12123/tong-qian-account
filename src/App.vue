@@ -10,4 +10,8 @@
 
 <style lang="scss">
   @import "~@/assets/style/reset.scss";
+
+  html, body {
+    height: 100%;
+  }
 </style>
