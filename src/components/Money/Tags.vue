@@ -1,7 +1,8 @@
 <template>
   <div class="tags">
     <div @click="select" class="current-tags">
-      <div class="tag-item" v-for="item in tagsData"
+      <div class="tag-item"
+           v-for="item in tagsData"
            :key="item"
       >
         {{ item }}
@@ -19,8 +20,8 @@
 
   @Component
   export default class Tags extends Vue {
-    @Prop(Array) readonly tagsData: string[] | undefined;
-    selectedTags: string[] = [];
+    @Prop({default: []}) readonly tagsData!: string[];
+    @Prop({default: []}) readonly selectedTags!: string[];
 
     select(e: MouseEvent) {
       const button = e.target as HTMLBaseElement;
@@ -28,13 +29,19 @@
         const text = button.textContent!;
         if (button.classList.contains('selected')) {
           const index = this.selectedTags.indexOf(text);
-          this.selectedTags.splice(index, 1);
+          const newArr =
+            this.selectedTags
+              .slice(0, index)
+              .concat(this.selectedTags.slice(index + 1));
+          this.$emit('update:selectedTags', newArr);
           button.classList.remove('selected');
         } else {
-          this.selectedTags.push(text);
+          this.$emit(
+            'update:selectedTags',
+            [...this.selectedTags, text]
+          );
           button.classList.add('selected');
         }
-        this.$emit('updateSelected', this.selectedTags);
       }
     }
 

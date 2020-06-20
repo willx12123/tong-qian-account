@@ -5,8 +5,12 @@
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Labels'
+  import Vue from 'vue';
+  import { Component } from 'vue-property-decorator';
+
+  @Component
+  export default class Labels extends Vue {
+
   };
 </script>
 

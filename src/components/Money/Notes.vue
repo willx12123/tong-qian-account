@@ -2,7 +2,7 @@
   <div class="notes">
     <label>
       <span class="notes-name">备注</span>
-      <input type="text" placeholder="在这里输入备注" v-model:value="notes"
+      <input type="text" placeholder="在这里输入备注" :value="value"
              @input="handleNotesChange"
       />
     </label>
@@ -11,14 +11,15 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component } from 'vue-property-decorator';
+  import { Component, Prop } from 'vue-property-decorator';
 
   @Component
   export default class Notes extends Vue {
-    notes: string = '';
+    @Prop(String) readonly value: string | undefined;
 
-    handleNotesChange() {
-      this.$emit('updateValue', this.notes);
+    handleNotesChange(e: InputEvent) {
+      const input = e.target as HTMLInputElement;
+      this.$emit('update:value', input.value);
     }
   };
 </script>

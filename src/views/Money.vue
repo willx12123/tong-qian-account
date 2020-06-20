@@ -2,8 +2,8 @@
   <div class="container">
     <Layout>
       <div class="money">
-        <Tags :tags-data.sync="tags" @updateSelected="onUpdateSelectedTags" />
-        <Notes @updateValue="onUpdateNotes" />
+        <Tags :tags-data.sync="tags" :selected-tags.sync="record.tags" />
+        <Notes :value.sync="record.notes" />
         <Types :type.sync="record.type" />
         <NumberPad @updateNumber="onUpdateNumber" />
       </div>
@@ -13,43 +13,47 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component } from 'vue-property-decorator';
+  import { Component, Watch } from 'vue-property-decorator';
 
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Types from '@/components/Money/Types.vue';
   import Notes from '@/components/Money/Notes.vue';
   import Tags from '@/components/Money/Tags.vue';
+  import { model } from '@/model';
 
-  interface Record {
-    tags: string[]
-    notes: string
-    type: number
-    amount: number
-  }
+  const recordList = model.fetch();
 
   @Component({
     components: {Notes, Tags, Types, NumberPad}
   })
   export default class Money extends Vue {
     tags: string[] = ['吃饭', '房租', '零食', '买书'];
-    record: Record = {
+    recordList: RecordItem[] = recordList;
+    record: RecordItem = {
       tags: [],
       notes: '',
       type: 0,
       amount: 0
     };
 
-    onUpdateSelectedTags(selectedTags: string[]) {
-      this.record.tags = selectedTags;
-    }
-
-    onUpdateNotes(notes: string) {
-      this.record.notes = notes;
-    }
-
+    // 更新数据时，同时提交记录
     onUpdateNumber(number: string) {
       this.record.amount = Number.parseFloat(number);
-      console.log(this.record);
+      this.record.createAt = new Date();
+      const newRecord = JSON.parse(JSON.stringify(this.record));
+      this.recordList.push(newRecord);
+      this.record = {
+        tags: [],
+        notes: '',
+        type: 0,
+        amount: 0
+      };
+      console.log(this.recordList);
+    }
+
+    @Watch('recordList')
+    onRecordListChange() {
+      model.save(recordList);
     }
   };
 </script>
