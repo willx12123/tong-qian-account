@@ -1,3 +1,5 @@
+import createId from '@/lib/idCreator';
+
 const localStorageRecordListKeyName = 'recordList';
 const localStorageTagsListKeyName = 'tagsList';
 
@@ -44,12 +46,13 @@ export const tagsListModel: TagsListModel = {
     );
   },
   create(name) {
+    const id = createId();
     const names = this.data.map(item => item.name);
     if (names.indexOf(name) !== -1) {
       throw new Error('duplicated');
     }
     this.data.push({
-      id: name,
+      id: id.toString(),
       name
     });
     this.save();
@@ -60,13 +63,10 @@ export const tagsListModel: TagsListModel = {
     if (idList.indexOf(id) !== -1) {
       const names = this.data.map((item => item.name));
       if (names.indexOf(name) !== -1) {
-        console.log(names);
-        console.log(name);
         throw new Error('Repeat');
       } else {
         const target = this.data.filter(item => item.id === id)[0];
         target.name = name;
-        target.id = name;
         this.save();
       }
     } else {
