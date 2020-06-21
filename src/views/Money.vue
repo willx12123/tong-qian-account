@@ -3,7 +3,10 @@
     <Layout>
       <div class="money">
         <Tags :tags-data.sync="tags" :selected-tags.sync="record.tags" />
-        <Notes :value.sync="record.notes" />
+        <Notes field-name="备注"
+               placeholder="请在此处输入备注"
+               :value.sync="record.notes"
+        />
         <Types :type.sync="record.type" />
         <NumberPad @updateNumber="onUpdateNumber" />
       </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="notes">
     <label>
-      <span class="notes-name">备注</span>
-      <input type="text" placeholder="在这里输入备注" :value="value"
+      <span class="notes-name">{{ fieldName }}</span>
+      <input type="text" :placeholder="placeholder" :value="value"
              @input="handleNotesChange"
       />
     </label>
@@ -16,6 +16,8 @@
   @Component
   export default class Notes extends Vue {
     @Prop(String) readonly value: string | undefined;
+    @Prop({default: '备注'}) readonly fieldName!: string;
+    @Prop({default: '在此处输入'}) readonly placeholder!: string;
 
     handleNotesChange(e: InputEvent) {
       const input = e.target as HTMLInputElement;

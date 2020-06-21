@@ -1,7 +1,12 @@
 <template>
-  <div>
-    bianji
-  </div>
+  <Layout>
+    <div class="edit-container">
+      <div class="back-bar">
+        <Icon name="left" />
+        <span>编辑标签</span>
+      </div>
+    </div>
+  </Layout>
 </template>
 
 <script lang="ts">
@@ -28,4 +33,12 @@
 
 <style lang="scss" scoped>
 
+  .edit-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .back-bar {
+
+  }
 </style>
