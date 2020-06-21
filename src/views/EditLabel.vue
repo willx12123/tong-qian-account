@@ -2,13 +2,17 @@
   <Layout>
     <div class="edit-container">
       <div class="back-bar">
-        <Icon name="left" />
+        <Icon name="left" @click.native="goBack" />
         <div>编辑标签</div>
         <div class="right"></div>
       </div>
-      <FormInputItem field-name="标签名" placeholder="请输入新标签名" />
+      <FormInputItem :value="tag.name"
+                     field-name="标签名"
+                     placeholder="请输入新标签名"
+                     @update:value="editTag"
+      />
       <div class="delete-btn-container">
-        <DefaultButton button-name="删除标签" />
+        <DefaultButton button-name="删除标签" @click.native="removeTag" />
       </div>
     </div>
   </Layout>
@@ -26,15 +30,40 @@
     components: {DefaultButton, FormInputItem}
   })
   export default class EditLabel extends Vue {
+    tag?: { id: string, name: string } = undefined;
+
     created() {
       const id = this.$route.params.id;
       tagsListModel.fetch();
       const tagsList = tagsListModel.data;
       const tag = tagsList.filter(t => t.id === id)[0];
       if (tag) {
-        console.log(tag);
+        this.tag = tag;
       } else {
         this.$router.replace('/404');
+      }
+    }
+
+    goBack() {
+      this.$router.back();
+    }
+
+    editTag(name: string) {
+      if (this.tag) {
+        try {
+          tagsListModel.update(this.tag.id, name);
+        } catch (e) {
+          if (e.message === 'Repeat') {
+            alert('与已有标签重复');
+          }
+        }
+      }
+    }
+
+    removeTag() {
+      if (this.tag) {
+        tagsListModel.remove(this.tag.id);
+        this.$router.replace('/labels');
       }
     }
   }

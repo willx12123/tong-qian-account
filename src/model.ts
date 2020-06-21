@@ -11,6 +11,8 @@ interface TagsListModel {
   fetch: () => TagData[]
   save: () => void
   create: (name: string) => string
+  update: (id: string, name: string) => void
+  remove: (id: string) => void
 }
 
 export const recordListModel = {
@@ -52,5 +54,27 @@ export const tagsListModel: TagsListModel = {
     });
     this.save();
     return name;
+  },
+  update(id, name) {
+    const idList = this.data.map(item => item.id);
+    if (idList.indexOf(id) !== -1) {
+      const names = this.data.map((item => item.name));
+      if (names.indexOf(name) !== -1) {
+        console.log(names);
+        console.log(name);
+        throw new Error('Repeat');
+      } else {
+        const target = this.data.filter(item => item.id === id)[0];
+        target.name = name;
+        target.id = name;
+        this.save();
+      }
+    } else {
+      throw new Error('NotFound');
+    }
+  },
+  remove(id) {
+    this.data = this.data.filter(item => item.id !== id);
+    this.save();
   }
 };

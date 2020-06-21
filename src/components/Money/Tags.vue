@@ -1,8 +1,9 @@
 <template>
   <div class="tags">
     <div @click="select" class="current-tags">
-      <div class="tag-item"
-           v-for="item in tagsData"
+      <div v-for="item in tagsData"
+           :class="{'tag-item': true, selected: selectedTags.indexOf(item) !==
+           -1}"
            :key="item"
       >
         {{ item }}
