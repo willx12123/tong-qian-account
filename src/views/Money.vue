@@ -20,14 +20,14 @@
 
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Types from '@/components/Money/Types.vue';
-  import Notes from '@/components/Money/Notes.vue';
+  import FormInputItem from '@/components/FormInputItem.vue';
   import Tags from '@/components/Money/Tags.vue';
   import { recordListModel } from '@/model';
 
   const localRecordList = recordListModel.fetch();
 
   @Component({
-    components: {Notes, Tags, Types, NumberPad}
+    components: {Notes: FormInputItem, Tags, Types, NumberPad}
   })
   export default class Money extends Vue {
     tags: string[] = ['吃饭', '房租', '零食', '买书'];

@@ -12,7 +12,7 @@
         </router-link>
       </div>
       <div class="add-label">
-        <button @click="createTag">新建标签</button>
+        <DefaultButton @click.native="createTag" button-name="新建标签" />
       </div>
     </div>
   </Layout>
@@ -22,10 +22,12 @@
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
   import { tagsListModel } from '@/model';
+  import DefaultButton from '@/components/DefaultButton.vue';
 
   const localTagsList = tagsListModel.fetch();
-
-  @Component
+  @Component({
+    components: {DefaultButton}
+  })
   export default class Labels extends Vue {
     tagsList = tagsListModel.data;
 

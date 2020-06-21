@@ -14,7 +14,7 @@
   import { Component, Prop } from 'vue-property-decorator';
 
   @Component
-  export default class Notes extends Vue {
+  export default class FormInputItem extends Vue {
     @Prop(String) readonly value: string | undefined;
     @Prop({default: '备注'}) readonly fieldName!: string;
     @Prop({default: '在此处输入'}) readonly placeholder!: string;

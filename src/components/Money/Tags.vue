@@ -71,6 +71,8 @@
     flex-direction: column;
     justify-content: flex-end;
 
+    background-color: #FFFFFF;
+
     .current-tags {
       width: 100%;
       display: flex;
