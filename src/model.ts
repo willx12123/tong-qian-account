@@ -3,20 +3,6 @@ import createId from '@/lib/idCreator';
 const localStorageRecordListKeyName = 'recordList';
 const localStorageTagsListKeyName = 'tagsList';
 
-interface TagData {
-  id: string
-  name: string
-}
-
-interface TagsListModel {
-  data: TagData[]
-  fetch: () => TagData[]
-  save: () => void
-  create: (name: string) => string
-  update: (id: string, name: string) => void
-  remove: (id: string) => void
-}
-
 export const recordListModel = {
   fetch(): RecordItem[] {
     return JSON.parse(

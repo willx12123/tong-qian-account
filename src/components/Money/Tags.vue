@@ -1,12 +1,14 @@
 <template>
   <div class="tags">
     <div @click="select" class="current-tags">
-      <div v-for="item in tagsData"
-           :class="{'tag-item': true, selected: selectedTags.indexOf(item) !==
-           -1}"
-           :key="item"
+      <div v-for="item in tags"
+           :key="item.id"
+           :class="{
+             'tag-item': true,
+             selected: selectedTags.indexOf(item.name) !== -1
+           }"
       >
-        {{ item }}
+        {{ item.name }}
       </div>
     </div>
     <div class="new-tag">
@@ -18,10 +20,13 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
+  import { tagsListModel } from '@/model';
+
+  tagsListModel.fetch();
 
   @Component
   export default class Tags extends Vue {
-    @Prop({default: []}) readonly tagsData!: string[];
+    tags = tagsListModel.data;
     @Prop({default: []}) readonly selectedTags!: string[];
 
     select(e: MouseEvent) {
@@ -48,11 +53,11 @@
 
     createNewTag() {
       const name: string = window.prompt('请输入新标签名') || '';
-      if (name === '' || name.length > 6) {
-        window.alert('标签名为空或过长！');
-      } else {
-        if (this.tagsData) {
-          this.$emit('update:tagsData', [...this.tagsData, name]);
+      try {
+        tagsListModel.create(name);
+      } catch (e) {
+        if (e.message === 'duplicated') {
+          alert('请勿与已有标签重复');
         }
       }
     }

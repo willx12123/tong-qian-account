@@ -2,7 +2,7 @@
   <div>
     <Layout>
       <div class="money">
-        <Tags :tags-data.sync="tags" :selected-tags.sync="record.tags" />
+        <Tags :selected-tags.sync="record.tags" />
         <Notes field-name="备注"
                placeholder="请在此处输入备注"
                :value.sync="record.notes"
@@ -30,7 +30,6 @@
     components: {Notes: FormInputItem, Tags, Types, NumberPad}
   })
   export default class Money extends Vue {
-    tags: string[] = ['吃饭', '房租', '零食', '买书'];
     recordList: RecordItem[] = localRecordList;
     record: RecordItem = {
       tags: [],
