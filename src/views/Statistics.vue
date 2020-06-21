@@ -1,12 +1,22 @@
 <template>
   <Layout>
-    <div>Statistics</div>
+    <div>
+      <div>{{ msg }}</div>
+      <div>{{ msg }}</div>
+      <div>{{ msg }}</div>
+      <div>{{ msg }}</div>
+      <div>{{ msg }}</div>
+      <div>{{ msg }}</div>
+      <div>{{ msg }}</div>
+    </div>
   </Layout>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Statistics'
+  import Vue from 'vue';
+
+  export default class Statistics extends Vue {
+    msg = 'hello statistics';
   };
 </script>
 

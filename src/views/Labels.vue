@@ -1,12 +1,16 @@
 <template>
   <Layout>
-    <div class="label-container">
-      <ol>
-        <li v-for="item in tagsList" :key="item">
-          <span>{{ item }}</span>
+    <div class="label">
+      <div>
+        <router-link class="item"
+                     v-for="item in tagsList"
+                     :key="item.id"
+                     :to="`/labels/edit/${item.id}`"
+        >
+          <span>{{ item.name }}</span>
           <Icon name="right" />
-        </li>
-      </ol>
+        </router-link>
+      </div>
       <div class="add-label">
         <button @click="createTag">新建标签</button>
       </div>
@@ -41,12 +45,12 @@
 </script>
 
 <style lang="scss" scoped>
-  .label-container {
+  .label {
     width: 100%;
     height: 100%;
     background-color: #EEEEEE;
 
-    ol > li {
+    div > .item {
       width: 100%;
       padding: 8px 24px;
       border-bottom: 1px solid #CFCFCF;

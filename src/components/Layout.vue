@@ -1,5 +1,5 @@
 <template>
-  <div :style="`height: ${height}px`" class="container">
+  <div :style="`height: ${height}px`" class="box-container">
     <div :style="`height: ${height - 49}px`" class="content">
       <slot></slot>
     </div>
@@ -22,7 +22,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .box-container {
     width: 100%;
 
     .content {

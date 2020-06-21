@@ -1,20 +1,21 @@
 <template>
-  <div class="container">
+  <div class="not-found-container">
     <h1>404 Not Found</h1>
     <div class="back-home">
-      <router-link to="/">返回首页</router-link>
+      <router-link to="/money">返回首页</router-link>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'NotFound'
+  import Vue from 'vue';
+
+  export default class NotFound extends Vue {
   };
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .not-found-container {
     width: 100vw;
     height: 100vh;
     padding: 40px;

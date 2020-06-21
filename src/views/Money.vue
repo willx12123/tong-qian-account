@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <Layout>
       <div class="money">
         <Tags :tags-data.sync="tags" :selected-tags.sync="record.tags" />
