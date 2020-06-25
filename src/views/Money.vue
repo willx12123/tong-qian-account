@@ -24,13 +24,13 @@
   import Tags from '@/components/Money/Tags.vue';
   import { recordListModel } from '@/model';
 
-  const localRecordList = recordListModel.fetch();
+  recordListModel.fetch();
 
   @Component({
     components: {Notes: FormInputItem, Tags, Types, NumberPad}
   })
   export default class Money extends Vue {
-    recordList: RecordItem[] = localRecordList;
+    recordList: RecordItem[] = recordListModel.data;
     record: RecordItem = {
       tags: [],
       notes: '',
@@ -51,11 +51,6 @@
         amount: 0
       };
       console.log(this.recordList);
-    }
-
-    @Watch('recordList')
-    onRecordListChange() {
-      recordListModel.save(this.recordList);
     }
   };
 </script>

@@ -4,15 +4,16 @@ const localStorageRecordListKeyName = 'recordList';
 const localStorageTagsListKeyName = 'tagsList';
 
 export const recordListModel = {
-  fetch(): RecordItem[] {
-    return JSON.parse(
+  data: [] as RecordItem[],
+  fetch() {
+    this.data = JSON.parse(
       window.localStorage.getItem(localStorageRecordListKeyName) || '[]'
     );
   },
-  save(data: RecordItem[]) {
-    window.localStorage.setItem(
+  save() {
+  window.localStorage.setItem(
       localStorageRecordListKeyName,
-      JSON.stringify(data)
+      JSON.stringify(this.data)
     );
   }
 };

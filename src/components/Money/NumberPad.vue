@@ -1,7 +1,7 @@
 <template>
   <div class="number-pad">
     <div class="current-money">{{ currentMoney }}</div>
-    <div @click="numberBtn" class="buttons">
+    <div @click.prevent="numberBtn" class="buttons">
       <button>1</button>
       <button>2</button>
       <button>3</button>
