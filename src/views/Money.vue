@@ -16,7 +16,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component, Watch } from 'vue-property-decorator';
+  import { Component } from 'vue-property-decorator';
 
   import NumberPad from '@/components/Money/NumberPad.vue';
   import Types from '@/components/Money/Types.vue';
@@ -41,9 +41,7 @@
     // 更新数据时，同时提交记录
     onUpdateNumber(number: string) {
       this.record.amount = Number.parseFloat(number);
-      this.record.createAt = new Date();
-      const newRecord = JSON.parse(JSON.stringify(this.record));
-      this.recordList.push(newRecord);
+      recordListModel.create(this.record);
       this.record = {
         tags: [],
         notes: '',
@@ -51,11 +49,6 @@
         amount: 0
       };
       console.log(this.recordList);
-    }
-
-    @Watch('recordList')
-    onRecordListChange() {
-      recordListModel.save();
     }
   };
 </script>

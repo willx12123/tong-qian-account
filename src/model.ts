@@ -1,17 +1,22 @@
 import createId from '@/lib/idCreator';
+import clone from '@/lib/clone';
 
 const localStorageRecordListKeyName = 'recordList';
 const localStorageTagsListKeyName = 'tagsList';
 
-export const recordListModel = {
+export const recordListModel: RecordListModel = {
   data: [] as RecordItem[],
   fetch() {
     this.data = JSON.parse(
       window.localStorage.getItem(localStorageRecordListKeyName) || '[]'
     );
+    return this.data;
   },
-  create() {
-
+  create(record: RecordItem) {
+    record.createAt = new Date();
+    const newRecord = clone(record);
+    this.data.push(newRecord);
+    this.save();
   },
   save() {
     window.localStorage.setItem(

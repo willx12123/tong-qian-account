@@ -11,6 +11,13 @@ interface TagData {
   name: string
 }
 
+interface RecordListModel {
+  data: RecordItem[]
+  fetch: () => RecordItem[]
+  save: () => void
+  create: (record: RecordItem) => void
+}
+
 interface TagsListModel {
   data: TagData[]
   fetch: () => TagData[]
