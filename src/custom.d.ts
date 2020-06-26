@@ -27,10 +27,13 @@ interface TagsListModel {
   remove: (id: string) => void
 }
 
-interface Window {
+interface Sttt {
   tagList: TagItem[]
   createTag: (name: string) => void
   removeTag: (id: string) => void
   updateTag: (id: string, name: string) => void
   getTag: (id: string) => TagItem | undefined
+
+  recordList: RecordItem[]
+  createRecord: (record: RecordItem) => void
 }

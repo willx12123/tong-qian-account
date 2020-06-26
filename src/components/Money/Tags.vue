@@ -20,10 +20,11 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
+  import store from '@/store/index2';
 
   @Component
   export default class Tags extends Vue {
-    tags: TagItem[] = window.tagList;
+    tags: TagItem[] = store.tagList;
     @Prop({default: []}) readonly selectedTags!: string[];
 
     select(e: MouseEvent) {
@@ -51,7 +52,7 @@
     createNewTag() {
       const name = window.prompt('请输入新标签名');
       if (name) {
-        window.createTag(name);
+        store.createTag(name);
       } else {
         alert('请输入至少一个字符');
       }

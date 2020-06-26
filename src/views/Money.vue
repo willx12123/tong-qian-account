@@ -22,15 +22,13 @@
   import Types from '@/components/Money/Types.vue';
   import FormInputItem from '@/components/FormInputItem.vue';
   import Tags from '@/components/Money/Tags.vue';
-  import { recordListModel } from '@/model';
-
-  recordListModel.fetch();
+  import store from '@/store/index2';
 
   @Component({
     components: {Notes: FormInputItem, Tags, Types, NumberPad}
   })
   export default class Money extends Vue {
-    recordList: RecordItem[] = recordListModel.data;
+    recordList: RecordItem[] = store.recordList;
     record: RecordItem = {
       tags: [],
       notes: '',
@@ -41,7 +39,7 @@
     // 更新数据时，同时提交记录
     onUpdateNumber(number: string) {
       this.record.amount = Number.parseFloat(number);
-      recordListModel.create(this.record);
+      store.createRecord(this.record);
       this.record = {
         tags: [],
         notes: '',

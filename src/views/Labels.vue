@@ -22,17 +22,18 @@
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
   import DefaultButton from '@/components/DefaultButton.vue';
+  import store from '@/store/index2';
 
   @Component({
     components: {DefaultButton}
   })
   export default class Labels extends Vue {
-    tagsList: TagItem[] = window.tagList;
+    tagsList: TagItem[] = store.tagList;
 
     createTag() {
       const name = window.prompt('请输入新的标签名');
       if (name) {
-        window.createTag(name);
+        store.createTag(name);
       } else {
         alert('请输入至少一个字符');
       }
