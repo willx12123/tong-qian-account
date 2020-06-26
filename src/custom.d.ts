@@ -30,4 +30,7 @@ interface TagsListModel {
 interface Window {
   tagList: TagItem[]
   createTag: (name: string) => void
+  removeTag: (id: string) => void
+  updateTag: (id: string, name: string) => void
+  getTag: (id: string) => TagItem | undefined
 }

@@ -26,6 +26,21 @@ window.createTag = (name) => {
     }
   }
 };
+window.getTag = (id) => {
+  return window.tagList.filter(t => t.id === id)[0];
+};
+window.removeTag = (id) => {
+  tagsListModel.remove(id);
+};
+window.updateTag = (id, name) => {
+  try {
+    tagsListModel.update(id, name);
+  } catch (e) {
+    if (e.message === 'Repeat') {
+      alert('与已有标签重复');
+    }
+  }
+};
 
 new Vue({
   router,

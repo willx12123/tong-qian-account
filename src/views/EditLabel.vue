@@ -22,7 +22,6 @@
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
 
-  import { tagsListModel } from '@/model';
   import FormInputItem from '@/components/FormInputItem.vue';
   import DefaultButton from '@/components/DefaultButton.vue';
 
@@ -30,16 +29,11 @@
     components: {DefaultButton, FormInputItem}
   })
   export default class EditLabel extends Vue {
-    tag?: { id: string, name: string } = undefined;
+    tag?: TagItem = undefined;
 
     created() {
-      const id = this.$route.params.id;
-      tagsListModel.fetch();
-      const tagsList = tagsListModel.data;
-      const tag = tagsList.filter(t => t.id === id)[0];
-      if (tag) {
-        this.tag = tag;
-      } else {
+      this.tag = window.getTag(this.$route.params.id);
+      if (!this.tag) {
         this.$router.replace('/404');
       }
     }
@@ -50,21 +44,15 @@
 
     editTag(name: string) {
       if (this.tag) {
-        try {
-          tagsListModel.update(this.tag.id, name);
-        } catch (e) {
-          if (e.message === 'Repeat') {
-            alert('与已有标签重复');
-          }
-        }
+        window.updateTag(this.tag.id, name);
       }
     }
 
     removeTag() {
       if (this.tag) {
-        tagsListModel.remove(this.tag.id);
-        this.$router.replace('/labels');
+        window.removeTag(this.tag.id);
       }
+      this.$router.replace('/labels');
     }
   }
 </script>
