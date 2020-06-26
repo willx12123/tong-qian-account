@@ -45,7 +45,7 @@
     }
 
     goBack() {
-      this.$router.back();
+      this.$router.replace('/labels');
     }
 
     editTag(name: string) {

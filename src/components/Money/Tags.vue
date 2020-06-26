@@ -20,13 +20,10 @@
 <script lang="ts">
   import Vue from 'vue';
   import { Component, Prop } from 'vue-property-decorator';
-  import { tagsListModel } from '@/model';
-
-  tagsListModel.fetch();
 
   @Component
   export default class Tags extends Vue {
-    tags = tagsListModel.data;
+    tags: TagItem[] = window.tagList;
     @Prop({default: []}) readonly selectedTags!: string[];
 
     select(e: MouseEvent) {
@@ -52,13 +49,11 @@
     }
 
     createNewTag() {
-      const name: string = window.prompt('请输入新标签名') || '';
-      try {
-        tagsListModel.create(name);
-      } catch (e) {
-        if (e.message === 'duplicated') {
-          alert('请勿与已有标签重复');
-        }
+      const name = window.prompt('请输入新标签名');
+      if (name) {
+        window.createTag(name);
+      } else {
+        alert('请输入至少一个字符');
       }
     }
   };

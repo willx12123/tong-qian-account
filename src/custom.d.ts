@@ -6,7 +6,7 @@ interface RecordItem {
   createAt?: Date
 }
 
-interface TagData {
+interface TagItem {
   id: string
   name: string
 }
@@ -19,10 +19,15 @@ interface RecordListModel {
 }
 
 interface TagsListModel {
-  data: TagData[]
-  fetch: () => TagData[]
+  data: TagItem[]
+  fetch: () => TagItem[]
   save: () => void
   create: (name: string) => string
   update: (id: string, name: string) => void
   remove: (id: string) => void
+}
+
+interface Window {
+  tagList: TagItem[]
+  createTag: (name: string) => void
 }

@@ -62,6 +62,7 @@ export const tagsListModel: TagsListModel = {
       } else {
         const target = this.data.filter(item => item.id === id)[0];
         target.name = name;
+        console.log(target);
         this.save();
       }
     } else {

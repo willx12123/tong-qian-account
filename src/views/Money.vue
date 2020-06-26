@@ -48,6 +48,11 @@
         type: 0,
         amount: 0
       };
+      // TODO: Vue 不更新视图，只能先操作 dom
+      document.querySelectorAll('.current-tags .tag-item.selected')
+        .forEach(item => {
+          item.classList.remove('selected');
+        });
       console.log(this.recordList);
     }
   };
