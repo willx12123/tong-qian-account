@@ -10,8 +10,11 @@ export const recordListModel = {
       window.localStorage.getItem(localStorageRecordListKeyName) || '[]'
     );
   },
+  create() {
+
+  },
   save() {
-  window.localStorage.setItem(
+    window.localStorage.setItem(
       localStorageRecordListKeyName,
       JSON.stringify(this.data)
     );

@@ -52,6 +52,11 @@
       };
       console.log(this.recordList);
     }
+
+    @Watch('recordList')
+    onRecordListChange() {
+      recordListModel.save();
+    }
   };
 </script>
 
