@@ -10,6 +10,7 @@ export const recordListModel: RecordListModel = {
     this.data = JSON.parse(
       window.localStorage.getItem(localStorageRecordListKeyName) || '[]'
     );
+    console.log('fetch啦');
     return this.data;
   },
   create(record: RecordItem) {
@@ -54,6 +55,9 @@ export const tagsListModel: TagsListModel = {
     return name;
   },
   update(id, name) {
+    if (name === '') {
+      throw new Error('Empty');
+    }
     const idList = this.data.map(item => item.id);
     if (idList.indexOf(id) !== -1) {
       const names = this.data.map((item => item.name));
@@ -62,7 +66,6 @@ export const tagsListModel: TagsListModel = {
       } else {
         const target = this.data.filter(item => item.id === id)[0];
         target.name = name;
-        console.log(target);
         this.save();
       }
     } else {
