@@ -1,12 +1,10 @@
 <template>
   <div class="tags">
     <div @click="select" class="current-tags">
-      <div v-for="item in tags"
+      <div class="tag-item"
+           v-for="item in tags"
            :key="item.id"
-           :class="{
-             'tag-item': true,
-             selected: selectedTags.indexOf(item.name) !== -1
-           }"
+           :class="selectedTags.indexOf(item.name) !== -1 ? 'selected' : ''"
       >
         {{ item.name }}
       </div>
@@ -19,7 +17,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component, Prop } from 'vue-property-decorator';
+  import { Component, Prop, Watch } from 'vue-property-decorator';
   import store from '@/store/index2';
 
   @Component
@@ -56,6 +54,11 @@
       } else {
         alert('请输入至少一个字符');
       }
+    }
+
+    @Watch('selectedTags')
+    saySelected() {
+      console.log(this.selectedTags);
     }
   };
 </script>

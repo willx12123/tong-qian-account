@@ -10,7 +10,6 @@ export const recordListModel: RecordListModel = {
     this.data = JSON.parse(
       window.localStorage.getItem(localStorageRecordListKeyName) || '[]'
     );
-    console.log('fetch啦');
     return this.data;
   },
   create(record: RecordItem) {
