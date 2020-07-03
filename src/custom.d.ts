@@ -26,16 +26,3 @@ interface TagsListModel {
   update: (id: string, name: string) => void
   remove: (id: string) => void
 }
-
-interface Sttt {
-  tagList: TagItem[]
-  updateTagList: () => void
-  createTag: (name: string) => void
-  removeTag: (id: string) => void
-  updateTag: (id: string, name: string) => void
-  getTag: (id: string) => TagItem | undefined
-
-  recordList: RecordItem[]
-  updateRecordList: () => void
-  createRecord: (record: RecordItem) => void
-}
