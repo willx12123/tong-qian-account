@@ -7,7 +7,7 @@
                placeholder="请在此处输入备注"
                :value.sync="record.notes"
         />
-        <Types :type.sync="record.type" />
+        <Tabs :data-source="tabBar" :type.sync="record.type" />
         <NumberPad @updateNumber="onUpdateNumber" />
       </div>
     </Layout>
@@ -19,12 +19,13 @@
   import { Component } from 'vue-property-decorator';
 
   import NumberPad from '@/components/Money/NumberPad.vue';
-  import Types from '@/components/Money/Types.vue';
+  import Tabs from '@/components/Tabs.vue';
   import FormInputItem from '@/components/FormInputItem.vue';
   import Tags from '@/components/Money/Tags.vue';
+  import recordTypeList from '@/constants/recordTypeList';
 
   @Component({
-    components: {Notes: FormInputItem, Tags, Types, NumberPad}
+    components: {Notes: FormInputItem, Tags, Tabs, NumberPad}
   })
   export default class Money extends Vue {
     record: RecordItem = {
@@ -33,6 +34,8 @@
       type: 0,
       amount: 0
     };
+
+    tabBar = recordTypeList;
 
     // 更新数据时，同时提交记录
     onUpdateNumber(number: string) {

@@ -11,18 +11,7 @@ interface TagItem {
   name: string
 }
 
-interface RecordListModel {
-  data: RecordItem[]
-  fetch: () => RecordItem[]
-  save: () => void
-  create: (record: RecordItem) => void
-}
-
-interface TagsListModel {
-  data: TagItem[]
-  fetch: () => TagItem[]
-  save: () => void
-  create: (name: string) => string
-  update: (id: string, name: string) => void
-  remove: (id: string) => void
+interface TabItem {
+  text: string
+  value: number
 }

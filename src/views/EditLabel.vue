@@ -70,6 +70,7 @@
     width: 100%;
     padding: 8px 24px;
     background-color: #FFFFFF;
+    border-bottom: 1px solid #EEEEEE;
 
     display: flex;
     align-items: center;

@@ -70,6 +70,7 @@
     .current-money {
       width: 100%;
       padding: 12px 24px;
+      background-color: #FFFFFF;
 
       font-size: 32px;
       font-weight: bold;

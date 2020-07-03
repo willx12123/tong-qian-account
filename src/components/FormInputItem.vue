@@ -30,7 +30,7 @@
   .notes {
     width: 100%;
     padding: 0 24px;
-    background-color: #EEEEEE;
+    background-color: #FFFFFF;
 
     label {
       display: flex;
