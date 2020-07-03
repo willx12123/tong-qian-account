@@ -2,7 +2,7 @@
   <div class="tags">
     <div @click="select" class="current-tags">
       <div class="tag-item"
-           v-for="item in tags"
+           v-for="item in tagList"
            :key="item.id"
            :class="selectedTags.indexOf(item.name) !== -1 ? 'selected' : ''"
       >
@@ -17,12 +17,16 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component, Prop, Watch } from 'vue-property-decorator';
-  import store from '@/store/index2';
+  import { Component, Prop } from 'vue-property-decorator';
 
-  @Component
+  @Component({
+    computed: {
+      tagList() {
+        return this.$store.state.tagList;
+      }
+    }
+  })
   export default class Tags extends Vue {
-    tags: TagItem[] = store.tagList;
     @Prop({default: []}) readonly selectedTags!: string[];
 
     select(e: MouseEvent) {
@@ -31,10 +35,9 @@
         const text = button.textContent!;
         if (button.classList.contains('selected')) {
           const index = this.selectedTags.indexOf(text);
-          const newArr =
-            this.selectedTags
-              .slice(0, index)
-              .concat(this.selectedTags.slice(index + 1));
+          const newArr = this.selectedTags
+            .slice(0, index)
+            .concat(this.selectedTags.slice(index + 1));
           this.$emit('update:selectedTags', newArr);
           button.classList.remove('selected');
         } else {
@@ -50,15 +53,10 @@
     createNewTag() {
       const name = window.prompt('请输入新标签名');
       if (name) {
-        store.createTag(name);
+        this.$store.commit('createTag', name);
       } else {
         alert('请输入至少一个字符');
       }
-    }
-
-    @Watch('selectedTags')
-    saySelected() {
-      console.log(this.selectedTags);
     }
   };
 </script>

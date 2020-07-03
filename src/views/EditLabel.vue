@@ -24,7 +24,6 @@
 
   import FormInputItem from '@/components/FormInputItem.vue';
   import DefaultButton from '@/components/DefaultButton.vue';
-  import store from '@/store/index2';
 
   @Component({
     components: {DefaultButton, FormInputItem}
@@ -33,7 +32,8 @@
     tag?: TagItem = undefined;
 
     created() {
-      this.tag = store.getTag(this.$route.params.id);
+      const tagList: TagItem[] = this.$store.state.tagList;
+      this.tag = tagList.filter(t => t.id === this.$route.params.id)[0];
       if (!this.tag) {
         this.$router.replace('/404');
       }
@@ -45,13 +45,14 @@
 
     editTag(name: string) {
       if (this.tag) {
-        store.updateTag(this.tag.id, name);
+        const id = this.tag.id;
+        this.$store.commit('updateTag', {id, name});
       }
     }
 
     removeTag() {
       if (this.tag) {
-        store.removeTag(this.tag.id);
+        this.$store.commit('removeTag', this.tag.id);
       }
       this.$router.replace('/labels');
     }

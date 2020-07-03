@@ -3,7 +3,7 @@
     <div class="label">
       <div>
         <router-link class="item"
-                     v-for="item in tagsList"
+                     v-for="item in tagList"
                      :key="item.id"
                      :to="`/labels/edit/${item.id}`"
         >
@@ -22,18 +22,20 @@
   import Vue from 'vue';
   import { Component } from 'vue-property-decorator';
   import DefaultButton from '@/components/DefaultButton.vue';
-  import store from '@/store/index2';
 
   @Component({
-    components: {DefaultButton}
+    components: {DefaultButton},
+    computed: {
+      tagList() {
+        return this.$store.state.tagList;
+      }
+    }
   })
   export default class Labels extends Vue {
-    tagsList: TagItem[] = store.tagList;
-
     createTag() {
       const name = window.prompt('请输入新的标签名');
       if (name) {
-        store.createTag(name);
+        this.$store.commit('createTag', name);
       } else {
         alert('请输入至少一个字符');
       }
