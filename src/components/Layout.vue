@@ -17,6 +17,9 @@
 
     mounted() {
       this.height = document.body.clientHeight;
+      window.onresize = () => {
+        this.height = document.body.clientHeight;
+      };
     }
   };
 </script>
