@@ -28,6 +28,9 @@ const store = new Vuex.Store({
     createRecord(state, record: RecordItem) {
       record.createAt = new Date();
       const newRecord = clone(record);
+      if (newRecord.tags.length === 0) {
+        newRecord.tags.push('无');
+      }
       state.recordList.push(newRecord);
       store.commit('saveRecordList');
     },

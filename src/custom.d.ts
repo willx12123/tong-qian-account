@@ -16,14 +16,26 @@ interface TabItem {
   value: number
 }
 
-interface RecordHashTable {
-  [key: string]: YearItem
+interface StatisticHashTable {
+  [key: string]: HashYear
 }
 
 interface YearItem {
-  [key: string]: MonthItem
+  [key: string]: MonthItem[]
+}
+
+interface HashYear {
+  [key: string]: HashMonth
 }
 
 interface MonthItem {
+  [key: string]: DayItem[]
+}
+
+interface HashMonth {
+  [key: string]: RecordItem[]
+}
+
+interface DayItem {
   [key: string]: RecordItem[]
 }
