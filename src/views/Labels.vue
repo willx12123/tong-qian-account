@@ -24,14 +24,13 @@
   import DefaultButton from '@/components/DefaultButton.vue';
 
   @Component({
-    components: {DefaultButton},
-    computed: {
-      tagList() {
-        return this.$store.state.tagList;
-      }
-    }
+    components: {DefaultButton}
   })
   export default class Labels extends Vue {
+    get tagList() {
+      return this.$store.state.tagList;
+    }
+
     createTag() {
       const name = window.prompt('请输入新的标签名');
       if (name) {
