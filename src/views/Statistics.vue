@@ -10,23 +10,54 @@
             :type.sync="dateType"
       />
       <div class="year-bar" v-for="(item1, index1) in sortArr" :key="index1">
-        <h2>{{ Object.keys(item1)[0] }}年</h2>
+        <RecordListItem :type="3">
+          <div slot="left">
+            {{ Object.keys(item1)[0] }}年
+          </div>
+          <div slot="right" v-if="dateType === 2">
+            {{ type===0?'-':'+' }}
+            {{
+            type===0 ?
+            yearMoney[Object.keys(item1)[0]].cost :
+            yearMoney[Object.keys(item1)[0]].earn
+            }}
+          </div>
+        </RecordListItem>
         <div class="month-bar"
+             v-if="dateType === 1 || dateType === 0"
              v-for="(item2, index2) in Object.values(item1)[0]"
              :key="index2"
         >
-          <h3>{{ Object.keys(item2)[0] }}月</h3>
+          <RecordListItem :type="2">
+            <div slot="left">
+              {{ Object.keys(item2)[0] }}月
+            </div>
+            <div slot="right" v-if="dateType === 1">
+              {{ type===0?'-':'+' }}
+              {{
+              type===0 ?
+              monthMoney[Object.keys(item1)[0]][Object.keys(item2)[0]].cost :
+              monthMoney[Object.keys(item1)[0]][Object.keys(item2)[0]].earn
+              }}
+            </div>
+          </RecordListItem>
           <div class="day-bar"
+               v-if="dateType === 0"
                v-for="(item3, index3) in Object.values(item2)[0]"
                :key="index3"
           >
-            <h4>{{ isToday(item3) }}日</h4>
-            <div class="item-bar"
-                 v-for="day in Object.values(item3)[0]"
-                 :key="day.createAt"
-                 v-if="day.type===type"
+            <RecordListItem type="1">
+              <div slot="left">
+                {{ isToday(item3) }}日
+              </div>
+              <div slot="right"></div>
+            </RecordListItem>
+            <RecordListItem :type="0"
+                            v-for="day in Object.values(item3)[0]"
+                            :key="day.createAt"
+                            v-if="day.type===type"
             >
-              <div class="tag-container">
+              <div slot="left" class="tag-container">
                 <div class="tag"
                      v-for="(tag, index) in day.tags"
                      :key="index"
@@ -34,12 +65,12 @@
                   {{ tag }}
                 </div>
               </div>
-              <div class="money">
+              <div slot="right" class="money">
                 {{ day.type === 0 ? '-':'+' }}
                 <span>¥</span>
                 {{ day.amount }}
               </div>
-            </div>
+            </RecordListItem>
           </div>
         </div>
       </div>
@@ -49,22 +80,26 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component, Watch } from 'vue-property-decorator';
+  import { Component } from 'vue-property-decorator';
   import dayjs from 'dayjs';
 
   import Tabs from '@/components/Tabs.vue';
 
   import intervalList from '@/constants/intervalList';
   import recordTypeList from '@/constants/recordTypeList';
+  import RecordListItem from '@/components/Statistics/RecordListItem.vue';
 
   @Component({
-    components: {Tabs}
+    components: {RecordListItem, Tabs}
   })
   export default class Statistics extends Vue {
     tabBar = recordTypeList;
     timeBar = intervalList;
     type = 0;
     dateType = 0;
+
+    yearMoney: MoneyYear = {};
+    monthMoney: MoneyMonth = {};
 
     sortArr: any = this.sortByDay;
 
@@ -119,7 +154,18 @@
       let dayArr: DayItem[] = [];
       for (const year of Object.keys(this.result)) {
         for (const month of Object.keys(this.result[year])) {
+          let monMoney: MoneyType = {
+            cost: 0,
+            earn: 0
+          };
           for (const day of Object.keys(this.result[year][month])) {
+            for (let item of this.result[year][month][day]) {
+              if (item.type === 0) {
+                monMoney.cost += item.amount;
+              } else {
+                monMoney.earn += item.amount;
+              }
+            }
             const tempArr = this.result[year][month][day].sort(
               (a, b) =>
                 dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf()
@@ -128,11 +174,18 @@
             mixObj[day] = tempArr;
             dayArr.push(mixObj);
           }
-          dayArr.sort(
-            (a, b) =>
-              Number.parseInt(Object.keys(b)[0]) -
-              Number.parseInt(Object.keys(a)[0])
-          );
+          if (!this.monthMoney[year]) {
+            this.monthMoney[year] = {};
+          }
+          this.monthMoney[year][month] = monMoney;
+          if (!this.yearMoney[year]) {
+            this.yearMoney[year] = {
+              cost: 0,
+              earn: 0
+            };
+          }
+          this.yearMoney[year].earn += monMoney.earn;
+          this.yearMoney[year].cost += monMoney.cost;
           const mixObj: MonthItem = {};
           mixObj[month] = dayArr;
           monthArr.push(mixObj);
@@ -151,25 +204,6 @@
           Number.parseInt(Object.keys(b)[0]) -
           Number.parseInt(Object.keys(a)[0])
       );
-    }
-
-    get sortByMonth() {
-      return [];
-    }
-
-    get sortByYear() {
-      return [];
-    }
-
-    @Watch('dateType')
-    changeSort() {
-      if (this.dateType === 0) {
-        this.sortArr = this.sortByDay;
-      } else if (this.dateType === 1) {
-        this.sortArr = this.sortByMonth;
-      } else if (this.dateType === 2) {
-        this.sortArr = this.sortByYear;
-      }
     }
   };
 </script>
@@ -198,41 +232,11 @@
     background-color: #FFFFFF;
     box-shadow: 2px 0 5px #DDDDDD;
 
-    h2 {
-      background-color: darken($bg-color, 16%);
-      padding-left: 16px;
-      padding-top: 8px;
-      padding-bottom: 8px;
-      font-size: 16px;
-      color: #222222;
-      font-weight: bold;
-    }
-
     .month-bar {
       width: 100%;
 
-      h3 {
-        background-color: darken($bg-color, 8%);
-        padding-left: 16px;
-        padding-top: 4px;
-        padding-bottom: 4px;
-        font-size: 16px;
-        color: #222222;
-        font-weight: bold;
-      }
-
       .day-bar {
         width: 100%;
-
-        h4 {
-          background-color: $bg-color;
-          padding-left: 16px;
-          padding-top: 4px;
-          padding-bottom: 4px;
-          font-size: 15px;
-          font-weight: 400;
-          color: #222222;
-        }
 
         .item-bar {
           width: 100%;

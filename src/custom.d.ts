@@ -39,3 +39,18 @@ interface HashMonth {
 interface DayItem {
   [key: string]: RecordItem[]
 }
+
+interface MoneyYear {
+  [key: string]: MoneyType
+}
+
+interface MoneyMonth {
+  [key: string]: {
+    [key: string]: MoneyType
+  }
+}
+
+interface MoneyType {
+  cost: number
+  earn: number
+}
