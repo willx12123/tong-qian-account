@@ -1,29 +1,12 @@
 # tong-qian-account
 
-## Project setup
-```
-npm install
-```
+铜钱记账，一款网页记账 APP。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+**使用技术：Vue2.x + Vue-Router + Vuex + TypeScript**
 
-### Compiles and minifies for production
+运行方式
 ```
-npm run build
+npm install // 下载依赖
+npm run serve // 测试
+npm run build // 构建
 ```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

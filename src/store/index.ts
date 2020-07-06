@@ -38,6 +38,12 @@ const store = new Vuex.Store({
       state.tagList = JSON.parse(
         window.localStorage.getItem(localStorageTagsListKeyName) || '[]'
       ) as TagItem[];
+      if (state.tagList.length === 0) {
+        const defaultTags = ['交通', '餐饮', '房租', '买衣服'];
+        for (const item of defaultTags) {
+          store.commit('createTag', item);
+        }
+      }
     },
     saveTagList(state) {
       window.localStorage.setItem(

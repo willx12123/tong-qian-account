@@ -52,6 +52,7 @@
       const name = window.prompt('请输入新标签名');
       if (name) {
         this.$store.commit('createTag', name);
+        window.alert('创建成功');
       } else {
         alert('请输入至少一个字符');
       }

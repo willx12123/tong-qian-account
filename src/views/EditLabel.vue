@@ -53,6 +53,7 @@
     removeTag() {
       if (this.tag) {
         this.$store.commit('removeTag', this.tag.id);
+        window.alert('删除成功');
       }
       this.$router.replace('/labels');
     }

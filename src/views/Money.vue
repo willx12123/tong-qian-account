@@ -52,7 +52,7 @@
         .forEach(item => {
           item.classList.remove('selected');
         });
-      console.log(this.$store.state.recordList);
+      window.alert('记录成功');
     }
   };
 </script>
