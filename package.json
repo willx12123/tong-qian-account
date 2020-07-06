@@ -1,7 +1,6 @@
 {
   "name": "tong-qian-account",
   "version": "0.1.0",
-  "homepage": "./",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

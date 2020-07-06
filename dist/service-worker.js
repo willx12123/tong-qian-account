@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.1e99d139c4e704a457310c5645d3f5bf.js"
+  "precache-manifest.f95a9f079ab7b81afd92f29ea39335db.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "tong-qian-account"});
