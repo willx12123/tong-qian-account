@@ -1,6 +1,6 @@
 <template>
   <div class="record-item-container" :class="typeClassName[type]">
-    <div>
+    <div class="left-bar">
       <slot name="left"></slot>
     </div>
     <div>

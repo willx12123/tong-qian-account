@@ -8,7 +8,7 @@
                :value.sync="record.notes"
         />
         <Tabs :data-source="tabBar" :type.sync="record.type" />
-        <NumberPad @updateNumber="onUpdateNumber" />
+        <NumberPad @updateNumber="onUpdateNumber" :c-m.sync="money" />
       </div>
     </Layout>
   </div>
@@ -28,6 +28,7 @@
     components: {Notes: FormInputItem, Tags, Tabs, NumberPad}
   })
   export default class Money extends Vue {
+    money: string = '0';
     record: RecordItem = {
       tags: [],
       notes: '',
@@ -38,15 +39,23 @@
     tabBar = recordTypeList;
 
     // 更新数据时，同时提交记录
-    onUpdateNumber(number: string) {
-      this.record.amount = Number.parseFloat(number);
+    onUpdateNumber() {
+      if (this.record.tags.length === 0) {
+        let noSelect = window.confirm('您未选择任何标签，是否提交？');
+        if (!noSelect) {
+          console.log(this.money);
+          return;
+        }
+      }
+      this.record.amount = Number.parseFloat(this.money);
       this.$store.commit('createRecord', this.record);
       this.record = {
         tags: [],
         notes: '',
-        type: 0,
+        type: this.record.type,
         amount: 0
       };
+      this.money = '0';
       // TODO: Vue 不更新视图，只能先操作 dom
       document.querySelectorAll('.current-tags .tag-item.selected')
         .forEach(item => {

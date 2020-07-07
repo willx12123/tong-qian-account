@@ -245,16 +245,7 @@
           justify-content: space-between;
           align-items: center;
 
-          font-size: 15px;
           color: #333333;
-
-          .tag-container {
-            display: flex;
-
-            .tag {
-              margin-right: 8px;
-            }
-          }
 
           .money {
             display: flex;
@@ -267,6 +258,14 @@
           }
         }
       }
+    }
+  }
+
+  .tag-container {
+    display: flex;
+
+    .tag {
+      margin-right: 8px;
     }
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="number-pad">
-    <div class="current-money">{{ currentMoney }}</div>
+    <div class="current-money">{{ cM }}</div>
     <div @click.prevent="numberBtn" class="buttons">
       <button>1</button>
       <button>2</button>
@@ -22,45 +22,48 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import { Component } from 'vue-property-decorator';
+  import { Component, Prop } from 'vue-property-decorator';
 
   @Component
   export default class NumberPad extends Vue {
-    currentMoney: string = '0';
+    @Prop({default: '0'}) readonly cM!: string;
+
+    emitNumber(payload: string) {
+      this.$emit('update:cM', payload);
+    }
 
     numberBtn(e: MouseEvent) {
       const button = (e.target as HTMLButtonElement);
       if (button.id === 'delete') {
-        this.currentMoney = this.currentMoney.slice(0, -1);
-        if (this.currentMoney === '') {
-          this.currentMoney = '0';
+        this.emitNumber(this.cM.slice(0, -1));
+        if (this.cM === '') {
+          this.emitNumber('0');
         }
         return;
       }
       if (button.id === 'clear') {
-        this.currentMoney = '0';
+        this.emitNumber('0');
         return;
       }
       if (button.id === 'ok') {
-        this.$emit('updateNumber', this.currentMoney);
-        this.currentMoney = '0';
+        this.$emit('updateNumber');
         return;
       }
 
       const input = button.textContent;
-      if (this.currentMoney.length === 15) {
+      if (this.cM.length === 15) {
         return;
       }
-      if (this.currentMoney === '0' && input !== '.') {
+      if (this.cM === '0' && input !== '.') {
         if (input !== '0') {
-          this.currentMoney = input || '0';
+          this.emitNumber(input || '0');
         }
         return;
       }
-      if (this.currentMoney.indexOf('.') !== -1 && input === '.') {
+      if (this.cM.indexOf('.') !== -1 && input === '.') {
         return;
       }
-      this.currentMoney += button.textContent;
+      this.emitNumber(this.cM + button.textContent);
     }
   };
 </script>
